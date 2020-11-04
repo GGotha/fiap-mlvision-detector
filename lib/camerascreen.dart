@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:fiap/congrats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
@@ -20,6 +18,18 @@ class CameraScreen extends StatefulWidget {
 
 class _CameraScreenState extends State<CameraScreen> {
   var text = "";
+
+  final FlutterTts flutterTts = FlutterTts();
+
+  startVoice() async {
+    await flutterTts.speak('Aplicativo iniciado');
+  }
+
+  void initState() {
+    super.initState();
+
+    startVoice();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,20 +47,9 @@ class _CameraScreenState extends State<CameraScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    // Text(
-                    //   'Para continuar atire um foto.',
-                    //   style: TextStyle(color: Colors.white),
-                    // ),
                     Container(
                       height: v.maxWidth,
                       width: v.maxWidth,
-                      // decoration: BoxDecoration(
-                      //   border: Border.all(
-                      //     color: Colors.white,
-                      //     width: 2,
-                      //   ),
-                      //   shape: BoxShape.circle,
-                      // ),
                     ),
                     FloatingActionButton(
                       onPressed: () async {
@@ -85,7 +84,6 @@ class _CameraScreenState extends State<CameraScreen> {
                             }
                           }
 
-                          final FlutterTts flutterTts = FlutterTts();
                           await flutterTts.speak(text);
                         } catch (e) {
                           print(e);
